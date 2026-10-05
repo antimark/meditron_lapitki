@@ -1,0 +1,60 @@
+{
+  "version": "2026-10-05-audit100-v2",
+  "source": "Кейс_Яндекс.Облако_в2 + spravochnik_pravil_50_priznakov_audit_100_epikrizov",
+  "precedence": "authoritative",
+  "global_rules": {
+    "all_values_are_strings": true,
+    "date_format": "DD.MM.YYYY",
+    "numbers": "no units; decimal point",
+    "bp_format": "SYS/DIA",
+    "ordinary_missing": "не указано",
+    "do_not_compute_unwritten_values": true,
+    "binary_rule": "1 = direct indication; 0 = explicit denial OR absence under the coding rule; 0 is not a medical conclusion",
+    "labs": "first result of current hospitalization",
+    "bp_bpm": "primary admission examination",
+    "ecg": "use a separate ECG record",
+    "cag": "Y performed; R documented refusal; N no evidence of performed CAG; vessel codes only when ca_fact=Y",
+    "xray_rg_pc": "Preserve both positive and explicit negative congestion/pulmonary edema wording; missing only when no relevant X-ray finding is documented.",
+    "medications": "Prefer explicit discharge/continued-therapy prescriptions over inpatient treatment narrative.",
+    "evidence": "Direct non-missing values require exact source evidence; absence-coded 0/N and ordinary missing may have empty evidence."
+  },
+  "binary_fields_case_first": [
+    "art_hyper",
+    "atr_fibril",
+    "copd",
+    "dm",
+    "tlt",
+    "ecg_avb",
+    "ecg_elevation"
+  ],
+  "field_policies": {
+    "ecg_avb": {
+      "output": "0|1",
+      "rule": "Any explicitly documented AV block => 1; explicit denial or no mention in ECG => 0. Degree is metadata only."
+    },
+    "ecg_elevation": {
+      "output": "0|1",
+      "rule": "ST elevation in ECG record => 1; explicit denial or no mention => 0. Diagnosis alone cannot populate ECG field."
+    },
+    "type_acs": {
+      "output": "STEMI|NSTEMI|NA|не указано",
+      "rule": "STEMI direct diagnosis with ST elevation; NSTEMI direct diagnosis without ST elevation; unstable angina or generic ACS with no STEMI/NSTEMI type => NA; no ACS/MI mention => не указано."
+    },
+    "mi_localisation": {
+      "output": "A|I|L|N|не указано",
+      "rule": "A anterior, I inferior, L lateral, N MI is stated but location not specified; do not infer from ECG leads."
+    },
+    "ca_fact": {
+      "output": "Y|R|N",
+      "rule": "Y performed; R documented refusal; N otherwise when there is no performed angiography evidence."
+    },
+    "ca_lad": {
+      "output": "0|1|2|не указано",
+      "rule": "Only when ca_fact=Y; 0 <50%, 1 50-89%, 2 >=90% or occlusion; use maximum documented lesion for LAD."
+    },
+    "rca": {
+      "output": "0|1|2|не указано",
+      "rule": "Only when ca_fact=Y; 0 <50%, 1 50-89%, 2 >=90% or occlusion; use maximum documented lesion for RCA."
+    }
+  }
+}

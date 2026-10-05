@@ -1,0 +1,1094 @@
+{
+  "admission_date": {
+    "group": "даты эпизода",
+    "kind": "date",
+    "section": "episode",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Дата поступления на текущую госпитализацию. Возвращать ДД.ММ.ГГГГ. Не брать даты прошлых госпитализаций, исследований или анамнеза. Допустима строка «Период лечения: с ... по ...»: для admission_date брать первую дату, для discharge_date — вторую.",
+    "example": "«Поступил 10.09.2021» → {\"admission_date\":\"10.09.2021\"}",
+    "guidance_source": "case_spec",
+    "source_file": null,
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "discharge_date": {
+    "group": "даты эпизода",
+    "kind": "date",
+    "section": "episode",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Дата выписки из текущей госпитализации без времени. Возвращать ДД.ММ.ГГГГ. Допустима строка «Период лечения: с ... по ...»: для admission_date брать первую дату, для discharge_date — вторую.",
+    "example": "«Выписан 16.09.2021 в 12:07» → {\"discharge_date\":\"16.09.2021\"}",
+    "guidance_source": "case_spec",
+    "source_file": null,
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "art_hyper": {
+    "group": "диагноз",
+    "kind": "binary",
+    "section": "diagnosis",
+    "absence_policy": "zero_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": [
+      "0",
+      "1",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Гипертоническая болезнь/артериальная гипертензия именно как установленный диагноз, а не просто повышенное АД. Распознавать: гипертоническая болезнь, ГБ, артериальная гипертензия, АГ, hypertension — только в диагностическом контексте. Если диагноз явно указан → 1. Не выводить 1 только по высокому АД или приёму гипотензивных препаратов.",
+    "example": "«Гипертоническая болезнь 3 ст.» → {\"art_hyper\":1}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "case_override": true,
+    "case_rule": "Бинарный код по контракту кейса: 1 — прямое указание признака; 0 — явное отрицание либо отсутствие упоминания по кодовому правилу.",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "atr_fibril": {
+    "group": "диагноз",
+    "kind": "binary",
+    "section": "diagnosis",
+    "absence_policy": "zero_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": [
+      "0",
+      "1",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Фибрилляция или трепетание предсердий как диагноз/нарушение ритма. Распознавать: фибрилляция предсердий, ФП, мерцательная аритмия, atrial fibrillation, AF; трепетание предсердий, atrial flutter. При явном указании → 1. Не выводить по одному нерегулярному пульсу без диагноза.",
+    "example": "«Фибрилляция предсердий» → {\"atr_fibril\":1}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "case_override": true,
+    "case_rule": "Бинарный код по контракту кейса: 1 — прямое указание признака; 0 — явное отрицание либо отсутствие упоминания по кодовому правилу.",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ],
+    "source_sections": [
+      "diagnosis",
+      "ecg"
+    ]
+  },
+  "ckd": {
+    "group": "диагноз",
+    "kind": "text",
+    "section": "diagnosis",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Хроническая болезнь почек и указанная стадия. Распознавать: ХБП, хроническая болезнь почек, CKD, chronic kidney disease. Возвращать нормализованную формулировку вместе со стадией, если она прямо указана. Не вычислять стадию самостоятельно по креатинину или eGFR.",
+    "example": "«ХБП 3А стадии» → {\"ckd\":\"ХБП 3А\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "copd": {
+    "group": "диагноз",
+    "kind": "binary",
+    "section": "diagnosis",
+    "absence_policy": "zero_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": [
+      "0",
+      "1",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Хроническая обструктивная болезнь лёгких как диагноз. Распознавать: ХОБЛ, хроническая обструктивная болезнь лёгких, COPD. При явном диагнозе → 1. Не выводить по курению, одышке или бронхообструкции без установленного диагноза.",
+    "example": "«Сопутствующий диагноз: ХОБЛ» → {\"copd\":1}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "case_override": true,
+    "case_rule": "Бинарный код по контракту кейса: 1 — прямое указание признака; 0 — явное отрицание либо отсутствие упоминания по кодовому правилу.",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "diagnosis_icd": {
+    "group": "диагноз",
+    "kind": "enum",
+    "section": "diagnosis",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Код основного диагноза по МКБ-10. Распознавать рядом с формулировками: МКБ-10, ICD-10, код диагноза, основной диагноз; извлекать код вида буква + 2 цифры, при наличии — точка и дополнительные знаки, например I21.1. Не брать код сопутствующего диагноза, если явно указан основной.",
+    "example": "«Диагноз МКБ: I21.1» → {\"diagnosis_icd\":\"I21.1\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "dm": {
+    "group": "диагноз",
+    "kind": "binary",
+    "section": "diagnosis",
+    "absence_policy": "zero_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": [
+      "0",
+      "1",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Сахарный диабет как установленный диагноз, независимо от типа. Распознавать: сахарный диабет, СД, diabetes mellitus, DM в диагностическом контексте. При явном диагнозе → 1. Не выводить по одиночной гипергликемии или HbA1c без установленного диагноза.",
+    "example": "«Сахарный диабет 2 типа» → {\"dm\":1}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "case_override": true,
+    "case_rule": "Бинарный код по контракту кейса: 1 — прямое указание признака; 0 — явное отрицание либо отсутствие упоминания по кодовому правилу.",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "hf": {
+    "group": "диагноз",
+    "kind": "text",
+    "section": "diagnosis",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Хроническая сердечная недостаточность с указанной стадией и/или функциональным классом. Распознавать: ХСН, хроническая сердечная недостаточность, CHF/HF в диагностическом контексте; стадии 1, 2А, 2Б, 3; ФК I–IV/1–4. Возвращать найденную формулировку со стадией и ФК. Не вычислять ХСН по ФВ, отёкам, NT-proBNP или другим признакам.",
+    "example": "«ХСН 2А, ФК 2» → {\"hf\":\"ХСН 2А, ФК 2\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "killip": {
+    "group": "диагноз",
+    "kind": "enum",
+    "section": "diagnosis",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Прямо указанный класс Killip при остром инфаркте/ОКС. Распознавать: Killip I, II, III, IV; Киллип I–IV. Нормализовать: I→1, II→2, III→3, IV→4. Не вычислять класс самостоятельно по симптомам, влажным хрипам, отёку лёгких или шоку.",
+    "example": "«Killip II» → {\"killip\":2}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "mi_localisation": {
+    "group": "диагноз",
+    "kind": "enum",
+    "section": "diagnosis",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": [
+      "A",
+      "I",
+      "L",
+      "N",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Локализация инфаркта миокарда по схеме: A — передняя; I — нижняя; L — боковая; N — локализация не уточнена. Распознавать явные формулировки инфаркта: передний/передней стенки/переднеперегородочный → A; нижний/нижней стенки/диафрагмальный → I; боковой/латеральный → L. Если инфаркт указан, но локализация в тексте не определена → N. Не определять локализацию только по отведениям ЭКГ, если в данном поле требуется текстовый диагноз.",
+    "example": "«Инфаркт нижней стенки» → {\"mi_localisation\":\"I\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "tlt": {
+    "group": "диагноз",
+    "kind": "binary",
+    "section": "episode",
+    "absence_policy": "zero_if_unmentioned",
+    "selection_policy": "performed_event_any_section",
+    "closed_values": [
+      "0",
+      "1",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Факт выполненного лекарственного тромболизиса/тромболитической терапии. Искать по всему текущему эпикризу: ТЛТ может быть описана в лечении, анамнезе, течении госпитализации или комбинированном разделе. Засчитывать только прямое указание выполненного события/введения тромболитика; ЧКВ, стентирование, тромбоаспирация, план или показание к ТЛТ не считать выполненной ТЛТ.",
+    "example": "«Проведён тромболизис» → {\"tlt\":1}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "case_override": true,
+    "case_rule": "Бинарный код по контракту кейса: 1 — прямое указание признака; 0 — явное отрицание либо отсутствие упоминания по кодовому правилу.",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ],
+    "source_sections": [
+      "episode"
+    ]
+  },
+  "type_acs": {
+    "group": "диагноз",
+    "kind": "enum",
+    "section": "diagnosis",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": [
+      "STEMI",
+      "NSTEMI",
+      "NA",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Тип ОКС строго по контракту кейса. Прямые STEMI/ИМпST/ОКС или ИМ с подъёмом ST → STEMI. Прямые NSTEMI/ИМбпST/ОКС или ИМ без подъёма ST → NSTEMI. Нестабильная стенокардия является ОКС, но не NSTEMI, поэтому при доступном enum STEMI/NSTEMI/NA → NA. Общее «ОКС» без типа → NA. Не классифицировать тип по одному тропонину, ЭКГ или иным косвенным признакам, если диагноз не сформулирован.",
+    "example": "«Инфаркт с подъёмом ST» → {\"type_acs\":\"STEMI\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "diagnosis_primary_extraction_11_keys(1).csv",
+    "case_override": true,
+    "case_rule": "Допустимые значения кейса: STEMI — ОКС/инфаркт с подъёмом ST; NSTEMI — ОКС/инфаркт без подъёма ST; NA — ОКС указан, но тип STEMI/NSTEMI не установлен. Если ОКС/инфаркт вообще не указан — «не указано».",
+    "guidance_secondary": "Тип ОКС: STEMI — инфаркт/ОКС с подъёмом ST; NSTEMI — инфаркт/ОКС без подъёма ST; NA — тип не установлен. Распознавать прямые формулировки STEMI, NSTEMI, ОКС с подъёмом ST, ОКС без подъёма ST, инфаркт с/без подъёма ST. Не выводить тип только по тропонину или одному косвенному признаку, если диагноз прямо не сформулирован.",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "bmi": {
+    "group": "осмотр при поступлении",
+    "kind": "number",
+    "section": "exam",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_primary_exam",
+    "closed_values": null,
+    "sanity_range": [
+      8,
+      80
+    ],
+    "guidance": "Прямо указанный индекс массы тела при осмотре. Распознавать: ИМТ, BMI, индекс массы тела. Извлекать первое фактическое числовое значение; десятичную запятую нормализовать в точку. Не рассчитывать BMI заново по росту и весу.",
+    "example": "«ИМТ 27,4» → {\"bmi\":27.4}",
+    "guidance_source": "medical_expert",
+    "source_file": "admission_exam_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "bp": {
+    "group": "осмотр при поступлении",
+    "kind": "bp",
+    "section": "exam",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_primary_exam",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Артериальное давление при первичном осмотре/поступлении в формате систолическое/диастолическое. Распознавать: АД, артериальное давление, BP, blood pressure. Возвращать первое значение первичного осмотра как строку «верхнее/нижнее», без единиц. Не подменять измерениями из последующего мониторинга или анамнеза, если явно есть первичное АД.",
+    "example": "«АД 140/90 мм рт. ст.» → {\"bp\":\"140/90\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "admission_exam_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "bpm": {
+    "group": "осмотр при поступлении",
+    "kind": "number",
+    "section": "exam",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_primary_exam",
+    "closed_values": null,
+    "sanity_range": [
+      20,
+      250
+    ],
+    "guidance": "Пульс или ЧСС при первичном осмотре, а не значение из ЭКГ. Распознавать: пульс, Ps, ЧСС, heart rate в разделе осмотра/поступления. Извлекать первое числовое значение без единиц. Не использовать ЧСС из ЭКГ, если для неё предусмотрен отдельный ключ ecg_bpm.",
+    "example": "«ЧСС 82 в минуту» → {\"bpm\":82}",
+    "guidance_source": "medical_expert",
+    "source_file": "admission_exam_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "height": {
+    "group": "осмотр при поступлении",
+    "kind": "number",
+    "section": "exam",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_primary_exam",
+    "closed_values": null,
+    "sanity_range": [
+      80,
+      250
+    ],
+    "guidance": "Рост пациента, прямо указанный при осмотре/антропометрии. Распознавать: рост, height. Извлекать числовое значение; для русских документов ожидаемая единица — см, но единицу в JSON не сохранять. Не вычислять и не преобразовывать из других показателей без явной необходимости.",
+    "example": "«Рост 170 см» → {\"height\":170}",
+    "guidance_source": "medical_expert",
+    "source_file": "admission_exam_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "rr": {
+    "group": "осмотр при поступлении",
+    "kind": "number",
+    "section": "exam",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_primary_exam",
+    "closed_values": null,
+    "sanity_range": [
+      5,
+      80
+    ],
+    "guidance": "Частота дыхательных движений в минуту. Распознавать: ЧДД, частота дыхания, частота дыхательных движений, respiratory rate, RR в контексте осмотра. Извлекать первое фактическое числовое значение без единиц. Не путать RR с интервалом R-R на ЭКГ.",
+    "example": "«ЧДД 18» → {\"rr\":18}",
+    "guidance_source": "medical_expert",
+    "source_file": "admission_exam_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "smoking": {
+    "group": "осмотр при поступлении",
+    "kind": "text",
+    "section": "history",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Только прямо указанный статус курения в анамнезе/осмотре. Возвращать документированную формулировку статуса (например «Курит», «Не курит», «Бросил курить», «Бросила курить», «Прекратил/Прекратила курить»). Рекомендации «курение исключить», «отказ от курения» не являются статусом.",
+    "example": "«Не курит» → {\"smoking\":\"Не курит\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "admission_exam_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ],
+    "source_sections": [
+      "history",
+      "exam"
+    ]
+  },
+  "spo2": {
+    "group": "осмотр при поступлении",
+    "kind": "number",
+    "section": "exam",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_primary_exam",
+    "closed_values": null,
+    "sanity_range": [
+      30,
+      100
+    ],
+    "guidance": "Сатурация кислорода периферической крови. Распознавать: SpO2, SpO₂, сатурация, насыщение крови кислородом, oxygen saturation. Извлекать числовое значение процента без знака %. Не путать с pO2/PaO2 из газов крови.",
+    "example": "«SpO2 97%» → {\"spo2\":97}",
+    "guidance_source": "medical_expert",
+    "source_file": "admission_exam_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "weight": {
+    "group": "осмотр при поступлении",
+    "kind": "number",
+    "section": "exam",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_primary_exam",
+    "closed_values": null,
+    "sanity_range": [
+      20,
+      400
+    ],
+    "guidance": "Масса тела пациента при осмотре/антропометрии. Распознавать: вес, масса тела, weight. Извлекать числовое значение; для русских документов ожидаемая единица — кг, но единицу в JSON не сохранять. Не вычислять вес по BMI или другим данным.",
+    "example": "«Вес 80 кг» → {\"weight\":80}",
+    "guidance_source": "medical_expert",
+    "source_file": "admission_exam_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "ecg_avb": {
+    "group": "ЭКГ",
+    "kind": "binary",
+    "section": "ecg",
+    "absence_policy": "zero_if_unmentioned",
+    "selection_policy": "first_ecg_record_binary_presence",
+    "closed_values": [
+      "0",
+      "1",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Наличие прямо указанной АВ-блокады в отдельной записи ЭКГ. Итоговое поле трактуется как бинарный код по контракту кейса: любая явно указанная АВ-блокада (I/II/III/полная) → 1; явное отрицание или отсутствие упоминания → 0. Блокаду ножек пучка Гиса не считать АВ-блокадой. Степень, если указана, остаётся видна в подтверждающей цитате/evidence, но не кодируется отдельным submission value.",
+    "example": "«АВ-блокада I степени» → {\"ecg_avb\":1}",
+    "guidance_source": "medical_expert",
+    "source_file": "ecg_primary_extraction_4_keys(1).csv",
+    "case_override": true,
+    "case_rule": "Бинарный код по контракту кейса: 1 — прямое указание признака; 0 — явное отрицание либо отсутствие упоминания по кодовому правилу.",
+    "guidance_secondary": "Распознавать синонимы АВ-/AV-/атриовентрикулярной блокады и её степень только как подтверждающий текст; итоговый submission value остаётся бинарным 0/1.",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "ecg_bpm": {
+    "group": "ЭКГ",
+    "kind": "number",
+    "section": "ecg",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_ecg_record",
+    "closed_values": null,
+    "sanity_range": [
+      20,
+      250
+    ],
+    "guidance": "Частота сердечных сокращений именно в записи/описании ЭКГ. Распознавать: ЧСС, ЧСС по ЭКГ, HR, heart rate, частота сердечных сокращений, уд/мин. Извлекать первое фактическое числовое значение ЧСС из ЭКГ, без единиц. Не подменять на пульс из осмотра или мониторинга, если он не относится к ЭКГ.",
+    "example": "«ЭКГ: ЧСС 79 уд/мин» → {\"ecg_bpm\":79}",
+    "guidance_source": "medical_expert",
+    "source_file": "ecg_primary_extraction_4_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "ecg_elevation": {
+    "group": "ЭКГ",
+    "kind": "binary",
+    "section": "ecg",
+    "absence_policy": "zero_if_unmentioned",
+    "selection_policy": "first_ecg_record",
+    "closed_values": [
+      "0",
+      "1",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Прямо указанный подъём сегмента ST в отдельной записи ЭКГ. Итоговое поле бинарное по контракту кейса: подъём/элевация ST → 1; явное отрицание или отсутствие упоминания → 0. Не брать подъём ST только из формулировки диагноза — для поля ЭКГ нужна запись ЭКГ.",
+    "example": "«Подъём ST в II, III, aVF» → {\"ecg_elevation\":1}",
+    "guidance_source": "medical_expert",
+    "source_file": "ecg_primary_extraction_4_keys(1).csv",
+    "case_override": true,
+    "case_rule": "Бинарный код по контракту кейса: 1 — прямое указание признака; 0 — явное отрицание либо отсутствие упоминания по кодовому правилу.",
+    "guidance_secondary": "Распознавать подъём/элевацию ST и прямые отрицания в записи ЭКГ; правило отсутствия из контракта кейса имеет приоритет.",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "ecg_rythm": {
+    "group": "ЭКГ",
+    "kind": "text",
+    "section": "ecg",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_ecg_record",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Названный в ЭКГ ритм сердца. Распознавать после слов: ритм, ритм сердца, rhythm; также типичные прямые формулировки: синусовый ритм, фибрилляция предсердий, трепетание предсердий, узловой ритм, предсердный ритм, желудочковый ритм, ритм ЭКС. Возвращать нормализованное название ритма без лишнего текста. Не подменять ритм отдельными экстрасистолами или нарушениями проводимости.",
+    "example": "«Ритм синусовый» → {\"ecg_rythm\":\"синусовый\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "ecg_primary_extraction_4_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "echo_ef": {
+    "group": "ЭХО-КГ",
+    "kind": "number",
+    "section": "echo",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": [
+      5,
+      90
+    ],
+    "guidance": "Фракция выброса левого желудочка в процентах. Распознавать: ФВ, ФВ ЛЖ, ФВЛЖ, EF, LVEF, ejection fraction, фракция выброса. Извлекать первое фактическое числовое значение ФВ из ЭхоКГ, без знака %. Не брать референсные значения или диапазоны нормы.",
+    "example": "«ФВ 45%» → {\"echo_ef\":45}",
+    "guidance_source": "medical_expert",
+    "source_file": "echo_primary_extraction_5_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "echo_lvd": {
+    "group": "ЭХО-КГ",
+    "kind": "number",
+    "section": "echo",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": [
+      15,
+      100
+    ],
+    "guidance": "Размер левого желудочка, указанный рядом с КДР ЛЖ. Распознавать: КДР ЛЖ, КДРЛЖ, КДР, LVEDD, LVIDd, конечно-диастолический размер ЛЖ. Извлекать первое фактическое числовое значение размера; сохранять число без единицы измерения. Не подменять на КСР ЛЖ, объём ЛЖ, толщину стенок или размер левого предсердия.",
+    "example": "«КДР ЛЖ 50 мм» → {\"echo_lvd\":50}",
+    "guidance_source": "medical_expert",
+    "source_file": "echo_primary_extraction_5_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "echo_lvd_2": {
+    "group": "ЭХО-КГ",
+    "kind": "number",
+    "section": "echo",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": [
+      15,
+      100
+    ],
+    "guidance": "Размер левого предсердия, указанный рядом с «ЛП». Распознавать: ЛП, левое предсердие, размер ЛП, LA, left atrium. Извлекать первое фактическое линейное числовое значение размера ЛП, без единицы измерения. Не подменять на объём ЛП, индекс объёма ЛП, КДР ЛЖ или другие камеры.",
+    "example": "«ЛП 43 мм» → {\"echo_lvd_2\":43}",
+    "guidance_source": "medical_expert",
+    "source_file": "echo_primary_extraction_5_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "echo_mr": {
+    "group": "ЭХО-КГ",
+    "kind": "text",
+    "section": "echo",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Степень митральной регургитации — обратного тока крови через митральный клапан. Распознавать: митральная регургитация, МР, митральная недостаточность, МН, MR, regurgitation on mitral valve. Возвращать текстовую формулировку с указанной степенью, как в документе, например «Митральная регургитация 2 ст.». Не путать с трикуспидальной, аортальной или лёгочной регургитацией.",
+    "example": "«Митральная регургитация 2 ст.» → {\"echo_mr\":\"Митральная регургитация 2 ст.\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "echo_primary_extraction_5_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "echo_zone": {
+    "group": "ЭХО-КГ",
+    "kind": "text",
+    "section": "echo",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Область миокарда со сниженным или отсутствующим сокращением. Распознавать формулировки локальных нарушений сократимости: гипокинез, гипокинезия, акинез, акинезия, дискинез, дискинезия, зона гипокинеза, зона акинеза, нарушение локальной сократимости, регионарное нарушение сократимости. Возвращать текст с типом нарушения и анатомической зоной/стенкой. Не заменять на общее снижение ФВ или «диффузная гипокинезия» без локальной зоны, если требуется именно область.",
+    "example": "«Гипокинез нижней стенки» → {\"echo_zone\":\"Гипокинез нижней стенки\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "echo_primary_extraction_5_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "rg_date": {
+    "group": "рентген грудной полости",
+    "kind": "date",
+    "section": "xray",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Дата выполнения рентгенографии органов грудной клетки. Распознавать дату, непосредственно связанную с формулировками: рентгенография грудной клетки, рентгенография ОГК, рентген ОГК, рентгенография органов грудной клетки, обзорная рентгенография грудной клетки, chest X-ray, CXR. Возвращать дату в формате ДД.ММ.ГГГГ. Не брать соседние даты госпитализации, ЭКГ, ЭхоКГ, КТ или выписки, если они не относятся к рентгенографии ОГК.",
+    "example": "«Рентгенография от 11.09.2021» → {\"rg_date\":\"11.09.2021\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "chest_xray_primary_extraction_2_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "rg_pc": {
+    "group": "рентген грудной полости",
+    "kind": "text",
+    "section": "xray",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Точная рентгенологическая формулировка о венозном застое/застойных изменениях/отёке лёгких. Сохранять как положительные, так и явные отрицательные формулировки («Данных за венозный застой в лёгких не получено», «Признаков отёка лёгких не выявлено»). Не подменять плевральным выпотом, пневмонией, инфильтрацией или кардиомегалией.",
+    "example": "«Признаки венозного застоя в лёгких» → {\"rg_pc\":\"Признаки венозного застоя в лёгких\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "chest_xray_primary_extraction_2_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "ca_date": {
+    "group": "коронарография",
+    "kind": "date",
+    "section": "cag",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Дата выполнения коронарографии/КАГ. Распознавать дату, непосредственно связанную с: коронарография, КАГ, коронарная ангиография, coronary angiography. Возвращать дату в формате ДД.ММ.ГГГГ. Не брать соседние даты госпитализации, ЭКГ, ЭхоКГ, ЧКВ или выписки, если они не обозначают дату КАГ. Если ca_fact != Y, итог должен быть «не указано».",
+    "example": "«10.09.2021. Коронарография» → {\"ca_date\":\"10.09.2021\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "coronary_angiography_primary_extraction_4_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "ca_fact": {
+    "group": "коронарография",
+    "kind": "enum",
+    "section": "cag",
+    "absence_policy": "N_if_unmentioned",
+    "selection_policy": "first_valid",
+    "closed_values": [
+      "Y",
+      "R",
+      "N"
+    ],
+    "sanity_range": null,
+    "guidance": "Факт выполнения коронарографии: Y — выполнена; R — отказ; N — данных о выполнении нет. Распознавать выполнение по формулировкам: выполнена КАГ, проведена коронарография, коронарография выполнена. Отказ: отказ от КАГ/коронарографии, пациент отказался. Если по обрабатываемому документу данных о КАГ нет → N.",
+    "example": "«Выполнена коронарография» → {\"ca_fact\":\"Y\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "coronary_angiography_primary_extraction_4_keys(1).csv",
+    "case_override": true,
+    "case_rule": "Y — выполнена КАГ; R — документирован отказ; N — сведений о выполненной КАГ нет. Если прямо указано, что КАГ не выполнена по иной причине и отказа нет, использовать N как единственный предусмотренный кейсом код невыполненной КАГ без отказа.",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "ca_lad": {
+    "group": "коронарография",
+    "kind": "enum",
+    "section": "cag",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "maximum_stenosis_for_vessel",
+    "closed_values": [
+      "0",
+      "1",
+      "2",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Степень сужения передней межжелудочковой артерии (ПМЖВ/LAD) по шкале: 0 — стеноз менее 50%; 1 — стеноз 50–89%; 2 — стеноз ≥90% или окклюзия/артерия закрыта. Распознавать: ПМЖВ, LAD, передняя межжелудочковая ветвь/артерия, left anterior descending. Использовать процент стеноза именно этой артерии. При нескольких поражениях LAD брать наибольшую указанную степень стеноза. Не переносить стенозы других коронарных артерий. Поле допустимо только при ca_fact=Y; иначе «не указано».",
+    "example": "«ПМЖВ: стеноз 70%» → {\"ca_lad\":1}",
+    "guidance_source": "medical_expert",
+    "source_file": "coronary_angiography_primary_extraction_4_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "rca": {
+    "group": "коронарография",
+    "kind": "enum",
+    "section": "cag",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "maximum_stenosis_for_vessel",
+    "closed_values": [
+      "0",
+      "1",
+      "2",
+      "не указано"
+    ],
+    "sanity_range": null,
+    "guidance": "Степень сужения правой коронарной артерии (ПКА/RCA) по той же шкале: 0 — стеноз менее 50%; 1 — стеноз 50–89%; 2 — стеноз ≥90% или окклюзия/артерия закрыта. Распознавать: ПКА, RCA, правая коронарная артерия, right coronary artery. Использовать процент стеноза именно ПКА. При нескольких поражениях ПКА брать наибольшую указанную степень стеноза. Не переносить стенозы LAD/ПМЖВ, ОА/LCx или других сосудов. Поле допустимо только при ca_fact=Y; иначе «не указано».",
+    "example": "«ПКА: окклюзия» → {\"rca\":2}",
+    "guidance_source": "medical_expert",
+    "source_file": "coronary_angiography_primary_extraction_4_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "card_trop": {
+    "group": "Лабораторные данные",
+    "kind": "text",
+    "section": "labs",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_current_admission",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Первый фактический результат анализа на сердечный тропонин. Распознавать: тропонин, сердечный тропонин, тропонин I, тропонин T, TnI, TnT, cTnI, cTnT, hs-cTnI, hs-cTnT, высокочувствительный тропонин, вч-тропонин. Если результат качественный: положительный/positive/pos/+ → «положительный»; отрицательный/negative/neg/- → «отрицательный». Если указан количественный результат — извлечь первое числовое значение пациента, без единиц и без референсного интервала. Не подменять на КФК-МВ/CK-MB, КФК/CK, миоглобин или ЛДГ.",
+    "example": "«Тропониновый тест положительный» → {\"card_trop\":\"положительный\"}; «hs-cTnI 46 нг/л, референс <19» → {\"card_trop\":46}",
+    "guidance_source": "medical_expert",
+    "source_file": "lab_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "crea": {
+    "group": "Лабораторные данные",
+    "kind": "number",
+    "section": "labs",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_current_admission",
+    "closed_values": null,
+    "sanity_range": [
+      10,
+      3000
+    ],
+    "guidance": "Первое фактическое значение креатинина крови/сыворотки/плазмы. Распознавать: креатинин, Кр, CREA, creatinine, serum creatinine. Извлекать число пациента без единиц; десятичную запятую нормализовать в точку. Не брать число из референсного интервала. Не подменять на креатинин мочи, клиренс креатинина, пробу Реберга, СКФ или eGFR.",
+    "example": "«Креатинин 98 мкмоль/л» → {\"crea\":98}",
+    "guidance_source": "medical_expert",
+    "source_file": "lab_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "glu": {
+    "group": "Лабораторные данные",
+    "kind": "number",
+    "section": "labs",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_current_admission",
+    "closed_values": null,
+    "sanity_range": [
+      1,
+      50
+    ],
+    "guidance": "Первое фактическое значение глюкозы крови/сыворотки/плазмы. Распознавать: глюкоза, глюкоза крови, GLU, glucose, сахар крови. Извлекать число пациента без единиц; десятичную запятую нормализовать в точку. Не брать референсный диапазон. Не подменять на глюкозу мочи, HbA1c, гликированный гемоглобин или результат глюкозотолерантного теста, если отдельное значение глюкозы крови не указано.",
+    "example": "«Глюкоза 5,8 ммоль/л» → {\"glu\":5.8}",
+    "guidance_source": "medical_expert",
+    "source_file": "lab_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "hb": {
+    "group": "Лабораторные данные",
+    "kind": "number",
+    "section": "labs",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_current_admission",
+    "closed_values": null,
+    "sanity_range": [
+      20,
+      250
+    ],
+    "guidance": "Первое фактическое значение гемоглобина в общем анализе крови. Распознавать: гемоглобин, Hb, HGB, Нв, hemoglobin. Извлекать число пациента без единиц и без референсного интервала. Не путать с HbA1c/гликированным гемоглобином, MCH, MCHC или свободным гемоглобином.",
+    "example": "«Гемоглобин 141 г/л» → {\"hb\":141}",
+    "guidance_source": "medical_expert",
+    "source_file": "lab_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "ldl": {
+    "group": "Лабораторные данные",
+    "kind": "number",
+    "section": "labs",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_current_admission",
+    "closed_values": null,
+    "sanity_range": [
+      0,
+      20
+    ],
+    "guidance": "Первое фактическое значение холестерина липопротеинов низкой плотности. Распознавать: ЛПНП, ХС ЛПНП, холестерин ЛПНП, LDL, LDL-C, low-density lipoprotein cholesterol. Извлекать число пациента без единиц; десятичную запятую нормализовать в точку. Не подменять на общий холестерин, ЛПВП/HDL, ЛПОНП/VLDL, non-HDL или коэффициент атерогенности.",
+    "example": "«Холестерин ЛПНП 2,5 ммоль/л» → {\"ldl\":2.5}",
+    "guidance_source": "medical_expert",
+    "source_file": "lab_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "leucocytes": {
+    "group": "Лабораторные данные",
+    "kind": "number",
+    "section": "labs",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_current_admission",
+    "closed_values": null,
+    "sanity_range": [
+      0,
+      100
+    ],
+    "guidance": "Первое фактическое значение лейкоцитов КРОВИ из общего анализа крови. Распознавать: лейкоциты, WBC, white blood cells; обозначение «Л» учитывать только в явном контексте ОАК/крови. Извлекать число пациента без единиц; десятичную запятую нормализовать в точку. Не брать лейкоциты мочи, лейкоциты в мазке/ликворе/кале, лейкоцитарную формулу или отдельные NEUT/LYM/MON.",
+    "example": "«Лейкоциты 7,0 ×10⁹/л» → {\"leucocytes\":7.0}",
+    "guidance_source": "medical_expert",
+    "source_file": "lab_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "thrombocytes": {
+    "group": "Лабораторные данные",
+    "kind": "number",
+    "section": "labs",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_current_admission",
+    "closed_values": null,
+    "sanity_range": [
+      1,
+      2000
+    ],
+    "guidance": "Первое фактическое значение тромбоцитов в общем анализе крови. Распознавать: тромбоциты, PLT, Тр, platelets. Извлекать число пациента без единиц и без референсного интервала. Не подменять на MPV, PDW, PCT/тромбокрит или показатели агрегации тромбоцитов.",
+    "example": "«Тромбоциты 297 ×10⁹/л» → {\"thrombocytes\":297}",
+    "guidance_source": "medical_expert",
+    "source_file": "lab_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "tot_chol": {
+    "group": "Лабораторные данные",
+    "kind": "number",
+    "section": "labs",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "first_current_admission",
+    "closed_values": null,
+    "sanity_range": [
+      0,
+      30
+    ],
+    "guidance": "Первое фактическое значение общего холестерина. Распознавать: общий холестерин, холестерин общий, общий ХС, ХС общий, total cholesterol, cholesterol total, TC, CHOL только если из контекста ясно, что речь об общем холестерине. Извлекать число пациента без единиц; десятичную запятую нормализовать в точку. Не подменять на ЛПНП/LDL, ЛПВП/HDL, ЛПОНП/VLDL, триглицериды или non-HDL.",
+    "example": "«Общий холестерин 5,4 ммоль/л» → {\"tot_chol\":5.4}",
+    "guidance_source": "medical_expert",
+    "source_file": "lab_primary_extraction_8_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "2_aag": {
+    "group": "медикаментозная терапия",
+    "kind": "text",
+    "section": "meds",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "prefer_discharge_recommendations",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Второй антиагрегант, кроме аспирина. Распознавать прежде всего: тикагрелор, клопидогрел, прасугрел; ticagrelor, clopidogrel, prasugrel. Возвращать найденную формулировку препарата с дозой, кратностью и временем приёма, если они указаны. Не записывать сюда аспирин/АСК. Не считать антикоагулянты вторым антиагрегантом.",
+    "example": "«Тикагрелор 90 мг 2 раза в день» → {\"2_aag\":\"Тикагрелор 90 мг 2 раза в день\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "therapy_primary_extraction_6_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "ace_ing_sartan": {
+    "group": "медикаментозная терапия",
+    "kind": "text",
+    "section": "meds",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "prefer_discharge_recommendations",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Ингибитор АПФ или блокатор рецепторов ангиотензина II (сартан), назначенный в терапии. Распознавать препараты класса ИАПФ: периндоприл, эналаприл, лизиноприл, рамиприл, каптоприл и др.; сартаны: лозартан, валсартан, кандесартан, телмисартан, ирбесартан и др. Возвращать препарат с дозой, кратностью и временем приёма, если они указаны. Не подменять на бета-блокаторы, антагонисты кальция или диуретики.",
+    "example": "«Периндоприл 5 мг утром» → {\"ace_ing_sartan\":\"Периндоприл 5 мг утром\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "therapy_primary_extraction_6_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "anticoagulant": {
+    "group": "медикаментозная терапия",
+    "kind": "text",
+    "section": "meds",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "prefer_discharge_recommendations",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Антикоагулянт, назначенный для снижения свёртываемости крови. Распознавать: апиксабан, ривароксабан, дабигатран, эдоксабан, варфарин; при явном назначении также гепарин/эноксапарин и другие антикоагулянты. Возвращать препарат с дозой, кратностью и временем приёма, если они указаны. Не относить сюда аспирин, тикагрелор, клопидогрел и другие антиагреганты.",
+    "example": "«Апиксабан 5 мг 2 раза в день» → {\"anticoagulant\":\"Апиксабан 5 мг 2 раза в день\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "therapy_primary_extraction_6_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "aspirin": {
+    "group": "медикаментозная терапия",
+    "kind": "text",
+    "section": "meds",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "prefer_discharge_recommendations",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Аспирин / ацетилсалициловая кислота / АСК как антиагрегант. Распознавать: аспирин, acetylsalicylic acid, ацетилсалициловая кислота, АСК, ASA; допустимы очевидные торговые формы АСК в кардиологической терапии. Возвращать найденную формулировку с дозой, кратностью и временем приёма, если они указаны. Не записывать сюда второй антиагрегант или антикоагулянт.",
+    "example": "«АСК 100 мг вечером» → {\"aspirin\":\"АСК 100 мг вечером\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "therapy_primary_extraction_6_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "bb": {
+    "group": "медикаментозная терапия",
+    "kind": "text",
+    "section": "meds",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "prefer_discharge_recommendations",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Бета-блокатор. Распознавать: бисопролол, метопролол, карведилол, небиволол, атенолол и другие явно указанные β-блокаторы. Возвращать препарат с дозой, кратностью и временем приёма, если они указаны. Не относить сюда ивабрадин, верапамил, дилтиазем или другие препараты только потому, что они снижают ЧСС.",
+    "example": "«Бисопролол 5 мг утром» → {\"bb\":\"Бисопролол 5 мг утром\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "therapy_primary_extraction_6_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  },
+  "statin": {
+    "group": "медикаментозная терапия",
+    "kind": "text",
+    "section": "meds",
+    "absence_policy": "not_spec_if_unmentioned",
+    "selection_policy": "prefer_discharge_recommendations",
+    "closed_values": null,
+    "sanity_range": null,
+    "guidance": "Статин для липидснижающей терапии. Распознавать: аторвастатин, розувастатин, симвастатин, правастатин, питавастатин, ловастатин; atorvastatin, rosuvastatin и др. Возвращать препарат с дозой, кратностью и временем приёма, если они указаны. Не относить сюда эзетимиб, ингибиторы PCSK9 или другие нестатиновые липидснижающие препараты.",
+    "example": "«Аторвастатин 80 мг вечером» → {\"statin\":\"Аторвастатин 80 мг вечером\"}",
+    "guidance_source": "medical_expert",
+    "source_file": "therapy_primary_extraction_6_keys(1).csv",
+    "source_precedence": [
+      "case_contract",
+      "medical_reference_when_case_silent",
+      "medical_expert",
+      "engineering_heuristic"
+    ]
+  }
+}

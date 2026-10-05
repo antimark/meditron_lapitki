@@ -1,0 +1,21 @@
+{
+  "version": "2026-10-04-case-first-v1",
+  "precedence": [
+    "case_contract",
+    "medical_reference_when_case_silent",
+    "medical_expert",
+    "engineering_heuristic"
+  ],
+  "notes": {
+    "unstable_angina": "Map to NA for type_acs: it is an acute coronary syndrome distinct from NSTEMI; the case enum has no UA value.",
+    "ecg_avb": "Case-first binary interpretation overrides expert ordinal interpretation.",
+    "ecg_elevation": "Case binary missing rule overrides expert preference for not specified on no mention.",
+    "strings": "Expert CSV examples sometimes show JSON numbers, but submission values remain strings because the case contract explicitly requires string values."
+  },
+  "unresolved_but_configured": {
+    "combined_mi_localisation": "Use medical-expert/engineering mapping only when case has no explicit combination rule.",
+    "multiple_echo_or_xray": "Prefer first relevant study unless a field-specific selection policy says otherwise.",
+    "therapy": "Prefer discharge/recommendation section over transient inpatient therapy when available.",
+    "cag_not_done_non_refusal": "Map to N because case exposes only Y/R/N."
+  }
+}

@@ -1,0 +1,37 @@
+services:
+  cardio-ui:
+    build:
+      context: .
+      args:
+        INSTALL_LOCAL: "${INSTALL_LOCAL:-1}"
+
+    container_name: cardio-hackathon
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - .env
+
+    environment:
+      HF_HOME: /app/hf_cache
+      HF_HUB_CACHE: /app/hf_cache/hub
+      TRANSFORMERS_CACHE: /app/hf_cache/hub
+      CARDIO_PIPELINE_CONFIG: /app/config/docker.toml
+
+    volumes:
+      # Users database, uploaded/anonymous documents,
+      # processing sessions and processing results.
+      - cardio_runtime:/app/runtime
+
+      # Persistent Hugging Face model cache.
+      # Model weights survive container recreation and image rebuilds.
+      - huggingface_cache:/app/hf_cache
+
+    restart: unless-stopped
+
+    stop_grace_period: 30s
+
+volumes:
+  cardio_runtime:
+  huggingface_cache:

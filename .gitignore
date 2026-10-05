@@ -1,0 +1,31 @@
+# OS/editor
+.DS_Store
+__MACOSX/
+.idea/
+.vscode/
+
+# Python
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+*.py[cod]
+.venv/
+venv/
+
+# Secrets
+**/.env
+!**/.env.example
+
+# Runtime/user data and model cache
+project/runtime/
+project/hf_cache/
+project/batch_run/
+project/control_results_repro/
+*.log
+
+# Large local model artifacts
+*.safetensors
+*.bin
+*.pt
+*.pth

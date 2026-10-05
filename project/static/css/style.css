@@ -1,0 +1,1367 @@
+/* ============================================================
+   НАСТРОЙКИ ДИЗАЙНА
+   ============================================================ */
+
+:root {
+    --scrollbar-width: 14px;
+
+    /* ---------------------------------------------------------
+       Геометрия интерфейса
+       --------------------------------------------------------- */
+
+    --sidebar-width: 280px;
+
+    --header-height: 70px;
+    --header-bottom: 16px;
+
+    --sidebar-inline: 24px;
+    --panel-inline: 30px;
+
+    --icon-size: 20px;
+    --icon-button-width: 28px;
+    --icon-gap: 10px;
+
+    --header-control-edge: 16px;
+    --header-control-gap: 8px;
+    --icon-stroke-width: 1.6;
+
+
+    /* ---------------------------------------------------------
+       Типографика
+       --------------------------------------------------------- */
+
+    --font-family: "Courier New", Courier, monospace;
+    --font-size: 16px;
+
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+
+    --line-height: 1.5;
+    --letter-spacing: 1px;
+
+
+    /* ---------------------------------------------------------
+       Светлая тема
+       --------------------------------------------------------- */
+
+    --bg: #f4f5f3;
+    --bg-2: #eceeeb;
+    --primary: #161616;
+    --secondary: #777777;
+    --secondary-2: #dfe2de;
+    --accent: #80b5ff;
+
+
+    /* ---------------------------------------------------------
+       Служебные цвета SCORE
+       --------------------------------------------------------- */
+
+    --score-bad: #ef4444;
+    --score-suspicious: #eab308;
+}
+
+
+/* ============================================================
+   ТЁМНАЯ ТЕМА
+   ============================================================ */
+
+html[data-theme="dark"] {
+    --bg: #111111;
+    --bg-2: #181818;
+    --primary: #d8d8d8;
+    --secondary: #777777;
+    --secondary-2: #2a2a2a;
+    --accent: #006aff;
+}
+
+
+/* ============================================================
+   БАЗОВЫЕ СТИЛИ
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+
+    margin: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    font-weight: var(--font-weight-normal);
+
+    line-height: var(--line-height);
+    letter-spacing: var(--letter-spacing);
+
+    background: var(--bg);
+    color: var(--primary);
+}
+
+
+/*
+ * Элементы формы браузер по умолчанию оформляет
+ * собственными шрифтами, поэтому явно наследуем
+ * нашу типографику.
+ */
+
+button,
+input {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+
+    line-height: inherit;
+    letter-spacing: inherit;
+}
+
+
+/* ------------------------------------------------------------
+   Единый стандарт Lucide
+   ------------------------------------------------------------ */
+
+.lucide {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    flex-shrink: 0;
+
+    stroke-width: var(--icon-stroke-width);
+}
+
+
+/* ============================================================
+   СТРАНИЦА ВХОДА
+   ============================================================ */
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--bg);
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+
+    padding: 40px;
+}
+
+
+/* ------------------------------------------------------------
+   Заголовок
+   ------------------------------------------------------------ */
+
+.login-header h1 {
+    margin: 0 0 12px;
+
+    font-size: var(--font-size);
+    font-weight: var(--font-weight-bold);
+}
+
+.login-header p {
+    margin: 0 0 40px;
+
+    color: var(--secondary);
+}
+
+
+/* ------------------------------------------------------------
+   Форма
+   ------------------------------------------------------------ */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+/* ------------------------------------------------------------
+   Поля ввода
+   ------------------------------------------------------------ */
+
+input {
+    width: 100%;
+    height: 50px;
+
+    padding: 0 16px;
+
+    background: transparent;
+    color: var(--primary);
+
+    border: 1px solid
+        color-mix(
+            in srgb,
+            var(--secondary) 55%,
+            transparent
+        );
+
+    border-radius: 0;
+
+    outline: none;
+
+    transition: border-color 0.15s ease;
+}
+
+input::placeholder {
+    color: var(--secondary);
+
+    opacity: 0.75;
+}
+
+input:focus {
+    border-color: var(--primary);
+}
+
+
+/* ------------------------------------------------------------
+   Базовая кнопка
+   ------------------------------------------------------------ */
+
+button {
+    height: 48px;
+
+    margin-top: 8px;
+
+    background: var(--primary);
+    color: var(--bg);
+
+    border: none;
+    border-radius: 0;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 82%,
+            var(--bg)
+        );
+}
+
+
+/* ============================================================
+   СТРАНИЦА ИСТОРИЙ БОЛЕЗНИ
+   ============================================================ */
+
+.cases-page {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+
+    grid-template-columns:
+        var(--sidebar-width)
+        minmax(0, 1fr);
+
+    background: var(--bg);
+
+    overflow: hidden;
+
+    transition: grid-template-columns 0.2s ease;
+}
+
+.cases-page.sidebar-collapsed {
+    grid-template-columns:
+        0
+        minmax(0, 1fr);
+}
+
+
+/* ============================================================
+   ЛЕВАЯ ПАНЕЛЬ
+   ============================================================ */
+
+.cases-sidebar {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--bg-2);
+
+    border-right: 1px solid
+        color-mix(
+            in srgb,
+            var(--secondary) 40%,
+            transparent
+        );
+
+    overflow: hidden;
+
+    min-width: 0;
+}
+
+
+/* ============================================================
+   СВОРАЧИВАНИЕ ЛЕВОЙ ПАНЕЛИ
+   ============================================================ */
+
+.sidebar-toggle {
+    position: absolute;
+    top: 0;
+    left: calc(
+        var(--sidebar-width)
+        - var(--sidebar-inline)
+        - var(--icon-button-width)
+    );
+
+    z-index: 20;
+
+    width: var(--icon-button-width);
+    height: var(--header-height);
+
+    margin: 0;
+    padding: 0 0 calc(var(--header-bottom) + 2px);
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    background: transparent;
+    color: var(--secondary);
+
+    border: none;
+    border-radius: 0;
+
+    cursor: pointer;
+
+    transition:
+        left 0.2s ease,
+        color 0.12s ease;
+}
+
+.sidebar-toggle:hover {
+    background: transparent;
+    color: var(--primary);
+}
+
+.sidebar-toggle svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    stroke-width: var(--icon-stroke-width);
+}
+
+
+/* Кнопка после сворачивания панели */
+
+.cases-page.sidebar-collapsed .sidebar-toggle {
+    left: var(--header-control-edge);
+}
+
+
+/* ============================================================
+   БРЕНД
+   ============================================================ */
+
+.cases-title {
+    height: var(--header-height);
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: var(--icon-gap);
+
+    padding: 0 var(--sidebar-inline) var(--header-bottom);
+
+    color: var(--primary);
+}
+
+
+/*
+ * Бренд — единственное исключение из общей
+ * типографической системы.
+ * Все параметры его шрифта задаются здесь напрямую.
+ */
+
+.brand-title {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+
+    line-height: 1;
+    letter-spacing: -1.2px;
+
+    color: var(--primary);
+}
+
+
+/* ============================================================
+   ОБРАБОТКА НОВОЙ ИСТОРИИ
+   ============================================================ */
+
+.process-section {
+    padding: 0;
+
+    background: transparent;
+
+    border: none;
+}
+
+
+/* ------------------------------------------------------------
+   Кнопка обработки
+   ------------------------------------------------------------ */
+
+.process-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+
+  width: calc(100% - 24px);
+  margin: 0 12px;
+  padding: 8px 12px;
+
+  background: var(--secondary-2);
+  color: var(--primary);
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.process-button:hover {
+    background: color-mix(
+        in srgb,
+        var(--secondary-2) 50%,
+        transparent
+    );
+
+    color: var(--primary);
+}
+
+.process-button:disabled {
+    background: transparent;
+    color: var(--secondary);
+
+    opacity: 0.5;
+
+    cursor: wait;
+}
+
+
+/* ------------------------------------------------------------
+   Иконка обработки
+   ------------------------------------------------------------ */
+
+.process-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.process-icon svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    stroke-width: var(--icon-stroke-width);
+}
+
+
+/* ------------------------------------------------------------
+   Выбранный файл
+   ------------------------------------------------------------ */
+
+.selected-file {
+    margin: 0;
+
+    padding:
+        0
+        20px
+        12px
+        46px;
+
+    color: var(--secondary);
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.selected-file:empty {
+    display: none;
+}
+
+/* ============================================================
+   СЕССИИ
+   ============================================================ */
+
+.sessions-label {
+    margin-top: 64px;
+    padding: 0 20px 10px;
+
+    color: var(--secondary);
+
+    font-size: var(--font-size);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+
+    user-select: none;
+    cursor: default;
+}
+
+/* ============================================================
+   СПИСОК КЕЙСОВ
+   ============================================================ */
+
+.cases-list {
+    flex: 1;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.case-session,
+.session-group {
+    width: 100%;
+}
+
+
+/* ------------------------------------------------------------
+   Заголовок сессии
+   ------------------------------------------------------------ */
+
+.session-toggle {
+    width: 100%;
+    height: auto;
+
+    margin: 0;
+    padding: 14px 20px 8px;
+
+    display: flex;
+    align-items: center;
+
+    gap: var(--icon-gap);
+
+    text-align: left;
+
+    background: transparent;
+    color: var(--primary);
+
+    border: none;
+
+    cursor: pointer;
+
+    transition: color 0.12s ease;
+}
+
+.session-toggle:hover {
+    background: transparent;
+    color: var(--primary);
+}
+
+
+/* Иконка наследует цвет всей строки */
+
+.session-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: inherit;
+}
+
+.session-icon svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    stroke-width: var(--icon-stroke-width);
+}
+
+
+/* Число справа тоже наследует цвет */
+
+.session-count {
+    margin-left: auto;
+
+    color: var(--secondary);
+}
+
+.session-files {
+    display: block;
+}
+
+
+/* ------------------------------------------------------------
+   Отдельный кейс
+   ------------------------------------------------------------ */
+
+.case-item {
+    width: 100%;
+    height: auto;
+
+    margin: 0;
+    padding: 11px 24px;
+
+    display: block;
+
+    text-align: left;
+
+    background: transparent;
+    color: var(--primary);
+
+    border: none;
+
+    cursor: pointer;
+
+    transition:
+        color 0.12s ease,
+        font-weight 0.12s ease;
+}
+
+.session-files .case-item {
+    padding-left: 42px;
+}
+
+.case-item:hover {
+    background: transparent;
+    color: var(--primary);
+}
+
+.case-item.active {
+    background: transparent;
+    color: var(--primary);
+
+    font-weight: var(--font-weight-bold);
+}
+
+
+/* ============================================================
+   ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ
+   ============================================================ */
+
+.profile-section {
+    position: relative;
+
+    min-height: 82px;
+
+    padding: 16px 20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    flex-shrink: 0;
+
+    background: var(--bg-2);
+}
+
+
+/* ------------------------------------------------------------
+   Аватар
+   ------------------------------------------------------------ */
+
+.profile-avatar-button {
+    width: 38px;
+    height: 38px;
+
+    margin: 0;
+    padding: 0;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border: none;
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    cursor: pointer;
+}
+
+.profile-avatar-button:hover {
+    background: transparent;
+}
+
+.profile-avatar {
+    width: 38px;
+    height: 38px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    transition: opacity 0.12s ease;
+}
+
+.profile-avatar-button:hover .profile-avatar {
+    opacity: 0.8;
+}
+
+
+/* ------------------------------------------------------------
+   Имя и роль
+   ------------------------------------------------------------ */
+
+.profile-info {
+    min-width: 0;
+}
+
+.profile-name {
+    min-width: 0;
+
+    font-weight: var(--font-weight-bold);
+
+    color: var(--primary);
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.profile-role {
+    color: var(--secondary);
+}
+
+
+/* ------------------------------------------------------------
+   Меню профиля
+   ------------------------------------------------------------ */
+
+.profile-menu {
+    position: absolute;
+
+    left: 16px;
+    bottom: calc(100% + 8px);
+
+    z-index: 200;
+
+    width: 220px;
+
+    padding: 6px;
+
+    background: var(--bg);
+
+    border: 1px solid
+        color-mix(
+            in srgb,
+            var(--secondary) 40%,
+            transparent
+        );
+}
+
+
+/* ------------------------------------------------------------
+   Пункты меню
+   ------------------------------------------------------------ */
+
+.profile-menu-item {
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+
+    margin: 0;
+    padding: 9px 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    background: transparent;
+    color: var(--primary);
+
+    border: none;
+    border-radius: 0;
+
+    text-align: left;
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.profile-menu-item:hover {
+    background: var(--bg);
+    color: var(--primary);
+}
+
+.profile-menu-item svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    flex-shrink: 0;
+
+    stroke-width: var(--icon-stroke-width);
+}
+
+
+
+
+/* ============================================================
+   ОСНОВНАЯ РАБОЧАЯ ОБЛАСТЬ
+   ============================================================ */
+
+.content-area {
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    background: var(--bg);
+
+    overflow: hidden;
+
+    transition: grid-template-columns 0.2s ease;
+}
+
+
+/* ------------------------------------------------------------
+   Свёрнутая MD-панель
+   ------------------------------------------------------------ */
+
+.content-area.md-collapsed {
+    grid-template-columns:
+        minmax(0, 1fr)
+        0fr;
+}
+
+.content-area.md-collapsed .md-viewer .viewer-header,
+.content-area.md-collapsed .md-viewer #md-content {
+    display: none;
+}
+
+
+/* ============================================================
+   ПАНЕЛИ ИСТОРИИ И ОРИГИНАЛА
+   ============================================================ */
+
+.case-viewer {
+    position: relative;
+
+    min-width: 0;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--bg);
+
+    overflow: hidden;
+}
+
+.json-viewer {
+    border-right: 1px solid
+        color-mix(
+            in srgb,
+            var(--secondary) 40%,
+            transparent
+        );
+}
+
+.md-viewer {
+    position: relative;
+
+    min-width: 0;
+
+    background: var(--bg-2);
+    /*
+     * visible необходим, поскольку кнопка
+     * сворачивания выступает за границы панели.
+     */
+    overflow: visible;
+}
+
+
+/* ------------------------------------------------------------
+   Заголовки панелей
+   ------------------------------------------------------------ */
+
+.viewer-header {
+    height: var(--header-height);
+    min-height: var(--header-height);
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 0 var(--panel-inline) var(--header-bottom);
+
+    color: var(--secondary);
+}
+
+
+/*
+ * При свёрнутом sidebar сначала идёт его toggle,
+ * затем с тем же 8px промежутком — иконка JSON.
+ *
+ * 16px от края + 28px control + 8px gap = 52px.
+ */
+.cases-page.sidebar-collapsed .json-viewer .viewer-header {
+    padding-left: calc(
+        var(--header-control-edge)
+        + var(--icon-button-width)
+        + var(--header-control-gap)
+    );
+}
+
+.md-header {
+    justify-content: space-between;
+}
+
+
+/* ------------------------------------------------------------
+   Содержимое панелей
+   ------------------------------------------------------------ */
+
+#json-content,
+#md-content {
+    flex: 1;
+    min-width: 0;
+
+    margin: 0;
+    padding: 30px;
+    padding-bottom: 60px;
+
+    overflow: auto;
+
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    font-weight: var(--font-weight-normal);
+
+    line-height: var(--line-height);
+    letter-spacing: var(--letter-spacing);
+
+    color: var(--primary);
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+
+/*
+ * История болезни состоит из HTML-элементов,
+ * поэтому переносы исходного текста здесь не нужны.
+ */
+
+#json-content {
+    white-space: normal;
+}
+
+
+/* ============================================================
+   НИЖНИЙ ГРАДИЕНТ ПАНЕЛЕЙ
+   ============================================================ */
+
+.case-viewer::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: var(--scrollbar-width);
+    bottom: 0;
+
+    height: 60px;
+
+    pointer-events: none;
+
+    z-index: 5;
+}
+
+
+/* JSON-панель */
+
+.json-viewer::after {
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--bg) 85%
+    );
+}
+
+
+/* MD-панель */
+
+.md-viewer::after {
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--bg-2) 85%
+    );
+}
+
+
+/* ============================================================
+   ЗАГОЛОВКИ ПАНЕЛЕЙ
+   ============================================================ */
+
+.viewer-title,
+.md-label-toggle {
+    display: flex;
+    align-items: center;
+
+    gap: var(--icon-gap);
+}
+
+.viewer-title svg,
+.md-label-toggle svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    flex-shrink: 0;
+
+    stroke-width: var(--icon-stroke-width);
+}
+
+/* ============================================================
+   ПЕРЕКЛЮЧАТЕЛЬ ПАНЕЛИ ОРИГИНАЛА
+   ============================================================ */
+
+.md-label-toggle {
+    position: absolute;
+
+    top: 0;
+    left: calc(50% + var(--panel-inline));
+
+    z-index: 100;
+
+    width: auto;
+    height: var(--header-height);
+
+    margin: 0;
+    padding: 0 0 var(--header-bottom);
+
+    display: flex;
+    align-items: flex-end;
+
+    gap: var(--icon-gap);
+
+    line-height: 1;
+
+    background: transparent;
+    color: var(--secondary);
+
+    border: none;
+
+    cursor: pointer;
+}
+
+.md-label-toggle:hover {
+    background: transparent;
+    color: var(--primary);
+}
+
+.content-area.md-collapsed .md-label-toggle {
+    left: auto;
+    right: calc(
+        var(--header-control-edge)
+        + var(--icon-button-width)
+        + var(--header-control-gap)
+    );
+
+    width: var(--icon-button-width);
+    padding: 0 0 calc(var(--header-bottom) + 2px);
+
+    justify-content: center;
+
+    gap: 0;
+}
+
+.content-area.md-collapsed .md-label-toggle span {
+    display: none;
+}
+
+
+
+/* ============================================================
+   ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ
+   ============================================================ */
+
+.theme-toggle {
+    position: fixed;
+
+    top: 0;
+    right: var(--header-control-edge);
+
+    z-index: 1000;
+
+    width: var(--icon-button-width);
+    height: var(--header-height);
+
+    margin: 0;
+    padding: 0 0 calc(var(--header-bottom) + 2px);
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    background: transparent;
+    color: var(--secondary);
+
+    border: none;
+
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    background: transparent;
+    color: var(--primary);
+}
+
+.theme-toggle svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    stroke-width: var(--icon-stroke-width);
+}
+
+
+/* ============================================================
+   ИСТОРИЯ БОЛЕЗНИ
+   ============================================================ */
+
+.history-content {
+    flex: 1;
+
+    padding: 30px;
+    padding-bottom: 60px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    white-space: normal;
+}
+
+
+/* ------------------------------------------------------------
+   Раздел
+   ------------------------------------------------------------ */
+
+.history-section {
+    margin-bottom: 34px;
+}
+
+.history-section-title {
+    margin-bottom: 14px;
+
+    font-weight: var(--font-weight-bold);
+
+    color: var(--primary);
+}
+
+
+/* ------------------------------------------------------------
+   Поле
+   ------------------------------------------------------------ */
+
+.history-field {
+    position: relative;
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(140px, 0.8fr);
+
+    gap: 28px;
+
+    /*
+     * Дополнительное пространство справа
+     * зарезервировано под индикатор SCORE.
+     */
+    padding: 7px 34px 7px 0;
+
+    color: var(--secondary);
+
+    cursor: default;
+
+    transition: color 0.12s ease;
+}
+
+.history-field:hover {
+    color: var(--primary);
+}
+
+.history-field-value {
+    color: var(--primary);
+}
+
+.history-field-missing {
+    opacity: 0.45;
+}
+
+
+/* ============================================================
+   CONTEXT — ПОДСВЕТКА ИСТОЧНИКА
+   ============================================================ */
+
+.history-field.has-context {
+    cursor: pointer;
+}
+
+.history-field.context-selected {
+    font-weight: var(--font-weight-bold);
+}
+
+.md-context-highlight {
+    padding: 1px 2px;
+
+    background: var(--accent);
+    color: var(--primary);
+
+    border-radius: 3px;
+
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+
+/* ============================================================
+   SCORE — ИНДИКАТОРЫ КАЧЕСТВА
+   ============================================================ */
+
+.field-score-badge {
+    position: absolute;
+
+    top: 50%;
+    right: 10px;
+
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+}
+
+.field-score-badge svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    stroke-width: var(--icon-stroke-width);
+}
+
+
+/* ------------------------------------------------------------
+   BAD
+   ------------------------------------------------------------ */
+
+.field-score-bad {
+    color: var(--score-bad);
+}
+
+
+/* ------------------------------------------------------------
+   SUSPICIOUS
+   ------------------------------------------------------------ */
+
+.field-score-suspicious {
+    color: var(--score-suspicious);
+}
+
+
+/* ============================================================
+   РАЗДЕЛИТЕЛИ
+   ============================================================ */
+
+.session-divider {
+    background:
+        color-mix(
+            in srgb,
+            var(--secondary) 40%,
+            transparent
+        );
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--secondary) 40%,
+            transparent
+        );
+}
+/* ============================================================
+   PRODUCTION COMPATIBILITY LAYER
+   Keeps deployment-only controls/auth/session features on top of UI revision 3.
+   ============================================================ */
+.auth-mode-row,
+.session-option-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    color: var(--secondary);
+}
+.auth-mode-row { margin: -16px 0 24px; }
+.session-option-row { padding: 4px 20px 12px; font-size: 13px; letter-spacing: 0.6px; }
+.session-option-label { min-width: 0; }
+.ui-switch { position: relative; display: inline-flex; align-items: center; flex: 0 0 auto; cursor: pointer; }
+.ui-switch input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; opacity: 0; pointer-events: none; }
+.ui-switch-track { position: relative; width: 44px; height: 24px; display: block; border: 1px solid color-mix(in srgb, var(--secondary) 55%, transparent); background: transparent; transition: border-color .15s ease, background .15s ease; }
+.ui-switch-thumb { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: var(--secondary); transition: transform .15s ease, background .15s ease; }
+.ui-switch input:checked + .ui-switch-track { border-color: var(--primary); background: color-mix(in srgb, var(--accent) 28%, transparent); }
+.ui-switch input:checked + .ui-switch-track .ui-switch-thumb { transform: translateX(20px); background: var(--primary); }
+.ui-switch input:focus-visible + .ui-switch-track { outline: 1px solid var(--primary); outline-offset: 3px; }
+.ui-switch.compact .ui-switch-track { width: 36px; height: 20px; }
+.ui-switch.compact .ui-switch-thumb { width: 12px; height: 12px; }
+.ui-switch.compact input:checked + .ui-switch-track .ui-switch-thumb { transform: translateX(16px); }
+.registration-secret-group { transition: opacity .15s ease; }
+.registration-secret-group.is-hidden { display: none; }
+.form-error { margin: 0 0 22px; padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--score-bad) 55%, transparent); color: var(--primary); background: color-mix(in srgb, var(--score-bad) 7%, transparent); line-height: 1.4; }
+.session-header-row { display: flex; align-items: center; width: 100%; gap: 4px; }
+.session-header-row .session-toggle { flex: 1 1 auto; min-width: 0; }
+.session-download { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; color: var(--secondary); text-decoration: none; border: none; background: transparent; opacity: .72; transition: color .12s ease, opacity .12s ease, background .12s ease; }
+.session-download:hover { color: var(--primary); opacity: 1; background: var(--bg); }
+.session-download svg { width: 17px; height: 17px; stroke-width: 1.7; }
+.session-anon-mark { margin-left: auto; padding: 1px 5px; color: var(--primary); background: color-mix(in srgb, var(--accent) 28%, transparent); font-size: 11px; letter-spacing: .5px; }
+.session-anon-mark + .session-count { margin-left: 8px; }
+.logout-form { margin: 0; padding: 0; width: 100%; }
+.process-label { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }

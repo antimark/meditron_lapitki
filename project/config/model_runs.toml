@@ -1,0 +1,46 @@
+[benchmark]
+base_config = "./config/regex_only.toml"
+output_dir = "./benchmark_runs"
+anonymize = false
+anonymizer_mode = "clinical"
+
+# Each run is executed independently and receives its own output tree:
+#   benchmark_runs/<kind>__<name>/result
+#   benchmark_runs/<kind>__<name>/score
+#   benchmark_runs/<kind>__<name>/context
+
+[[runs]]
+name = "qwen_0_5b"
+kind = "local"
+enabled = true
+backend = "transformers"
+model_alias = "qwen_0_5b"
+local_model_path = ""
+
+[[runs]]
+name = "qwen_1_5b"
+kind = "local"
+enabled = true
+backend = "transformers"
+model_alias = "qwen_1_5b"
+local_model_path = ""
+
+[[runs]]
+name = "provider_1"
+kind = "api"
+enabled = false
+base_url = "https://api.example.com/v1"
+model = "MODEL_NAME"
+api_key = ""
+api_key_env = "PROVIDER_1_API_KEY"
+mode = "all"
+
+[[runs]]
+name = "provider_2"
+kind = "api"
+enabled = false
+base_url = "https://api.example.com/v1"
+model = "MODEL_NAME"
+api_key = ""
+api_key_env = "PROVIDER_2_API_KEY"
+mode = "all"

@@ -1,0 +1,61 @@
+{
+  "version": "1.2-audit100",
+  "basis": {
+    "dataset": "100 synthetic public epicrises used for pipeline diagnostics",
+    "previous_patched_file_score_distribution": {
+      "min": 0.7957,
+      "p10": 0.8346,
+      "median": 0.8641,
+      "p90": 0.8921,
+      "max": 0.9029
+    },
+    "note": "Operational UI thresholds, not probabilities. v5 case-first semantics were smoke-tested on the 100 public synthetic documents; recalibrate on organizer gold/reviewed validation data.",
+    "v4_regex_only_100_score_distribution": {
+      "min": 0.8203,
+      "p10": 0.8393,
+      "median": 0.8812,
+      "p90": 0.9213,
+      "max": 0.9342,
+      "mean": 0.8812
+    },
+    "v5_case_first_regex_only_100_score_distribution": {
+      "min": 0.8178,
+      "median": 0.88065,
+      "max": 0.9337,
+      "good": 89,
+      "suspicious": 11,
+      "bad": 0
+    },
+    "audit100_machine_label_compatibility": {
+      "documents": 100,
+      "fields_per_document": 50,
+      "exact_matches": 5000,
+      "comparisons": 5000,
+      "exact_value_accuracy": 1.0,
+      "scope": "regex_only deterministic layer; values only",
+      "warning": "Supplied machine labels may contain ambiguity/errors; this is not unseen-set accuracy."
+    }
+  },
+  "file": {
+    "good_min": 0.84,
+    "suspicious_min": 0.7,
+    "bad_below": 0.7,
+    "force_bad_if_zero_extracted": true,
+    "force_bad_on_critical_validation": true,
+    "force_suspicious_on_any_high_conflict": true
+  },
+  "field": {
+    "good_min": 0.88,
+    "suspicious_min": 0.55,
+    "bad_below": 0.55,
+    "force_bad_if_format_invalid": true,
+    "force_bad_if_evidence_invalid": true,
+    "force_suspicious_on_conflict": true,
+    "no_candidate_score": 0.55
+  },
+  "colors": {
+    "good": "green",
+    "suspicious": "yellow",
+    "bad": "red"
+  }
+}

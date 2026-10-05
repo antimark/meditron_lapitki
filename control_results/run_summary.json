@@ -1,0 +1,78 @@
+{
+  "version": "final-tlt-episode-wide",
+  "mode": "batch orchestration with deterministic providers only",
+  "config": "project/config/default.toml",
+  "provider_overrides": {
+    "LOCAL_LLM_ENABLED": "0",
+    "LLM_API_ENABLED": "0"
+  },
+  "workers": 4,
+  "batch_analysis": true,
+  "processed": 10,
+  "ok": 10,
+  "errors": 0,
+  "quality_labels": {
+    "good": 10,
+    "suspicious": 0,
+    "bad": 0
+  },
+  "score_min": 0.8497,
+  "score_max": 0.9371,
+  "items": [
+    {
+      "file": "train-0001.md",
+      "quality_score": 0.8497,
+      "quality_label": "good"
+    },
+    {
+      "file": "train-0002.md",
+      "quality_score": 0.9141,
+      "quality_label": "good"
+    },
+    {
+      "file": "train-0003.md",
+      "quality_score": 0.9371,
+      "quality_label": "good"
+    },
+    {
+      "file": "train-0004.md",
+      "quality_score": 0.9222,
+      "quality_label": "good"
+    },
+    {
+      "file": "train-0005.md",
+      "quality_score": 0.9069,
+      "quality_label": "good"
+    },
+    {
+      "file": "train-0006.md",
+      "quality_score": 0.914,
+      "quality_label": "good"
+    },
+    {
+      "file": "train-0007.md",
+      "quality_score": 0.9105,
+      "quality_label": "good"
+    },
+    {
+      "file": "train-0008.md",
+      "quality_score": 0.8982,
+      "quality_label": "good"
+    },
+    {
+      "file": "train-0009.md",
+      "quality_score": 0.8684,
+      "quality_label": "good"
+    },
+    {
+      "file": "train-0010.md",
+      "quality_score": 0.9022,
+      "quality_label": "good"
+    }
+  ],
+  "verification": {
+    "pytest": "28 passed",
+    "tlt_regression": "passed: cross-section positive, combined heading, named thrombolytic, explicit negative, PCI non-TLT, LLM batch isolation, deterministic preview",
+    "note": "Control outputs were regenerated after the TLT/section/LLM-scope integration changes."
+  }
+}

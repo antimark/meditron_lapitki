@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Истории болезни</title>
+    <script>
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "dark") document.documentElement.dataset.theme = "dark";
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Переключить тему" title="Переключить тему">
+        <i data-lucide="moon"></i>
+    </button>
+
+    <main class="cases-page">
+        <aside class="cases-sidebar">
+            <div class="cases-title brand-title">ЛапITки</div>
+
+            <div class="process-section">
+                <input type="file" id="md-file-input" name="files" accept=".md,.txt,text/markdown,text/plain" multiple hidden>
+                <button type="button" id="process-button" class="process-button">
+                    <span class="process-icon"><i data-lucide="upload"></i></span>
+                    <span class="process-label">Обработать</span>
+                </button>
+                <div class="session-option-row">
+                    <span class="session-option-label">Анонимизировать</span>
+                    <label class="ui-switch compact" for="anonymize-toggle" title="Перед обработкой сохранить и использовать только анонимизированную копию">
+                        <input id="anonymize-toggle" type="checkbox">
+                        <span class="ui-switch-track" aria-hidden="true"><span class="ui-switch-thumb"></span></span>
+                    </label>
+                </div>
+                <div id="selected-file" class="selected-file"></div>
+            </div>
+
+            <div class="sessions-label">Недавние</div>
+            <div class="cases-list">
+                {% for session_item in sessions %}
+                    <div class="session-group{% if not loop.first %} collapsed{% endif %}">
+                        <div class="session-header-row">
+                            <button type="button" class="session-toggle">
+                                <span class="session-icon">
+                                    {% if loop.first %}<i data-lucide="folder-open"></i>{% else %}<i data-lucide="folder"></i>{% endif %}
+                                </span>
+                                <span>Сессия {{ sessions|length - loop.index0 }}</span>
+                                {% if session_item.anonymized %}<span class="session-anon-mark">anon</span>{% endif %}
+                                <span class="session-count">{{ session_item.files|length }}</span>
+                            </button>
+                            {% if session_item.session_id %}
+                                <a class="session-download" href="{{ url_for('download_session_jsons', session_id=session_item.session_id) }}" title="Скачать JSON сессии (.zip)" aria-label="Скачать JSON сессии">
+                                    <i data-lucide="download"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="session-files" {% if not loop.first %}style="display: none;"{% endif %}>
+                            {% for file in session_item.files %}
+                                <button type="button" class="case-item" data-file="{{ file }}">{{ file }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="profile-section" class="profile-section">
+                <button type="button" id="profile-menu-toggle" class="profile-avatar-button" aria-label="Открыть меню профиля" aria-expanded="false" aria-controls="profile-menu">
+                    <img class="profile-avatar" src="{{ url_for('static', filename='img/profile.jpg') }}" alt="Фото пользователя">
+                </button>
+                <div class="profile-info">
+                    <div class="profile-name">{{ current_username }}</div>
+                    <div class="profile-role">Пользователь</div>
+                </div>
+                <div id="profile-menu" class="profile-menu" hidden>
+                    <button type="button" class="profile-menu-item" data-profile-action="profile"><i data-lucide="user-round"></i><span>Профиль</span></button>
+                    <button type="button" class="profile-menu-item" data-profile-action="settings"><i data-lucide="settings"></i><span>Настройки</span></button>
+                    <form action="{{ url_for('logout') }}" method="post" class="logout-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="profile-menu-item profile-menu-logout"><i data-lucide="log-out"></i><span>Выйти</span></button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+
+        <button type="button" id="sidebar-toggle" class="sidebar-toggle" aria-label="Свернуть левую панель" title="Свернуть левую панель">
+            <i data-lucide="panel-left-close"></i>
+        </button>
+
+        <section id="content-area" class="content-area">
+            <section class="case-viewer json-viewer">
+                <header class="viewer-header">
+                    <span class="viewer-title"><i data-lucide="file"></i><span id="current-file">Выберите историю болезни</span></span>
+                </header>
+                <div id="json-content" class="history-content">Выберите историю болезни.</div>
+            </section>
+
+            <section id="md-viewer" class="case-viewer md-viewer">
+                <header class="viewer-header md-header"></header>
+                <pre id="md-content">Выберите историю болезни.</pre>
+            </section>
+            <button type="button" id="md-toggle" class="md-label-toggle" aria-label="Свернуть оригинал" title="Свернуть оригинал">
+                <i data-lucide="book-open"></i><span>Оригинал</span>
+            </button>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/context_highlighter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/score_badges.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/profile_menu.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cases.js') }}"></script>
+</body>
+</html>

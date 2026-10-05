@@ -1,0 +1,53 @@
+{
+  "qwen_0_5b": {
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "enabled_for_training": true,
+    "max_length": 4096,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "qwen_1_5b": {
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "enabled_for_training": true,
+    "max_length": 4096,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "smollm2_1_7b": {
+    "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+    "enabled_for_training": true,
+    "max_length": 4096,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  }
+}

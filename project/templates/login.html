@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <script>
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "dark") document.documentElement.dataset.theme = "dark";
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Переключить тему" title="Переключить тему">
+        <i data-lucide="moon"></i>
+    </button>
+
+    <main class="login-page">
+        <section class="login-container">
+            <header class="login-header">
+                <h1 id="auth-title">{{ 'Регистрация' if mode == 'register' else 'Вход' }}</h1>
+                <p id="auth-description">
+                    {{ 'Создайте пользователя для работы с историями болезни.' if mode == 'register' else 'Войдите в систему для работы с историями болезни.' }}
+                </p>
+            </header>
+
+            <div class="auth-mode-row">
+                <span>Регистрация</span>
+                <label class="ui-switch" for="auth-mode-toggle">
+                    <input id="auth-mode-toggle" type="checkbox" {% if mode == 'register' %}checked{% endif %}>
+                    <span class="ui-switch-track" aria-hidden="true"><span class="ui-switch-thumb"></span></span>
+                </label>
+            </div>
+
+            {% if error %}
+                <div class="form-error" role="alert">{{ error }}</div>
+            {% endif %}
+
+            <form class="login-form" action="{{ url_for('login') }}" method="post" id="auth-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="mode" id="auth-mode" value="{{ mode }}">
+
+                <div class="form-group">
+                    <label for="login">Логин</label>
+                    <input type="text" id="login" name="login" autocomplete="username" placeholder="Введите логин" value="{{ entered_login }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" placeholder="Введите пароль" minlength="8" required>
+                </div>
+
+                <div class="form-group registration-secret-group{% if mode != 'register' %} is-hidden{% endif %}" id="registration-secret-group">
+                    <label for="registration-secret">Секретный ключ регистрации</label>
+                    <input type="password" id="registration-secret" name="registration_secret" autocomplete="off" placeholder="Введите секретный ключ" {% if mode == 'register' %}required{% endif %}>
+                </div>
+
+                <button type="submit" id="auth-submit">{{ 'Зарегистрироваться' if mode == 'register' else 'Войти' }}</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,1322 @@
+{
+  "document_id": "train-0010.md",
+  "quality_score": 0.9022,
+  "base_quality_score": 0.9022,
+  "quality_label": "good",
+  "thresholds_version": "1.2-audit100",
+  "coverage": 0.82,
+  "extracted_fields": 41,
+  "direct_evidence_fields": 35,
+  "mean_selected_field_score": 0.9394,
+  "conflict_fraction": 0.0,
+  "critical_issues": 0,
+  "field_quality": {
+    "admission_date": {
+      "score": 0.936,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "22.04.2024",
+          "score": 0.936,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "22.04.2024",
+      "final_format_valid": true
+    },
+    "discharge_date": {
+      "score": 0.936,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "26.04.2024",
+          "score": 0.936,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "26.04.2024",
+      "final_format_valid": true
+    },
+    "art_hyper": {
+      "score": 0.722,
+      "label": "suspicious",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "0",
+          "score": 0.722,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": true,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "0",
+      "final_format_valid": true
+    },
+    "atr_fibril": {
+      "score": 0.722,
+      "label": "suspicious",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "0",
+          "score": 0.722,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": true,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "0",
+      "final_format_valid": true
+    },
+    "ckd": {
+      "score": 0.55,
+      "label": "suspicious",
+      "selected_source": null,
+      "agreement_families": [],
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "reason": "no_candidate_for_not_specified",
+      "candidates": [],
+      "final_value": "не указано",
+      "final_format_valid": true
+    },
+    "copd": {
+      "score": 0.722,
+      "label": "suspicious",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "0",
+          "score": 0.722,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": true,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "0",
+      "final_format_valid": true
+    },
+    "diagnosis_icd": {
+      "score": 1.0,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "I21.0",
+          "score": 1.0,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 1.0,
+          "peer_bonus": 0.035,
+          "adaptive_llm_bonus": 0.0
+        },
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "I21.0",
+          "score": 1.0,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 1.0,
+          "peer_bonus": 0.035,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "I21.0",
+      "final_format_valid": true
+    },
+    "dm": {
+      "score": 0.722,
+      "label": "suspicious",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "0",
+          "score": 0.722,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": true,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "0",
+      "final_format_valid": true
+    },
+    "hf": {
+      "score": 0.55,
+      "label": "suspicious",
+      "selected_source": null,
+      "agreement_families": [],
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "reason": "no_candidate_for_not_specified",
+      "candidates": [],
+      "final_value": "не указано",
+      "final_format_valid": true
+    },
+    "killip": {
+      "score": 0.965,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "1",
+          "score": 0.965,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 1.0,
+          "peer_bonus": 0.035,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "1",
+      "final_format_valid": true
+    },
+    "mi_localisation": {
+      "score": 0.965,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "A",
+          "score": 0.965,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 1.0,
+          "peer_bonus": 0.035,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "A",
+      "final_format_valid": true
+    },
+    "tlt": {
+      "score": 0.722,
+      "label": "suspicious",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "0",
+          "score": 0.722,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": true,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "0",
+      "final_format_valid": true
+    },
+    "type_acs": {
+      "score": 0.965,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "STEMI",
+          "score": 0.965,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 1.0,
+          "peer_bonus": 0.035,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "STEMI",
+      "final_format_valid": true
+    },
+    "bmi": {
+      "score": 0.55,
+      "label": "suspicious",
+      "selected_source": null,
+      "agreement_families": [],
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "reason": "no_candidate_for_not_specified",
+      "candidates": [],
+      "final_value": "не указано",
+      "final_format_valid": true
+    },
+    "bp": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "157/77",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "157/77",
+      "final_format_valid": true
+    },
+    "bpm": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "105",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "105",
+      "final_format_valid": true
+    },
+    "height": {
+      "score": 0.55,
+      "label": "suspicious",
+      "selected_source": null,
+      "agreement_families": [],
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "reason": "no_candidate_for_not_specified",
+      "candidates": [],
+      "final_value": "не указано",
+      "final_format_valid": true
+    },
+    "rr": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "18",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "18",
+      "final_format_valid": true
+    },
+    "smoking": {
+      "score": 0.93,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "Не курит",
+          "score": 0.93,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "Не курит",
+      "final_format_valid": true
+    },
+    "spo2": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "95",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "95",
+      "final_format_valid": true
+    },
+    "weight": {
+      "score": 0.55,
+      "label": "suspicious",
+      "selected_source": null,
+      "agreement_families": [],
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "reason": "no_candidate_for_not_specified",
+      "candidates": [],
+      "final_value": "не указано",
+      "final_format_valid": true
+    },
+    "ecg_avb": {
+      "score": 0.722,
+      "label": "suspicious",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "0",
+          "score": 0.722,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": true,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "0",
+      "final_format_valid": true
+    },
+    "ecg_bpm": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "92",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "92",
+      "final_format_valid": true
+    },
+    "ecg_elevation": {
+      "score": 0.965,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "1",
+          "score": 0.965,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 1.0,
+          "peer_bonus": 0.035,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "1",
+      "final_format_valid": true
+    },
+    "ecg_rythm": {
+      "score": 0.965,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "синусовый",
+          "score": 0.965,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 1.0,
+          "peer_bonus": 0.035,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "синусовый",
+      "final_format_valid": true
+    },
+    "echo_ef": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "59",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "59",
+      "final_format_valid": true
+    },
+    "echo_lvd": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "53",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "53",
+      "final_format_valid": true
+    },
+    "echo_lvd_2": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "41",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "41",
+      "final_format_valid": true
+    },
+    "echo_mr": {
+      "score": 0.93,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "Митральная регургитация 2 ст.",
+          "score": 0.93,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "Митральная регургитация 2 ст.",
+      "final_format_valid": true
+    },
+    "echo_zone": {
+      "score": 0.93,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "Гипокинез передней стенки ЛЖ",
+          "score": 0.93,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "Гипокинез передней стенки ЛЖ",
+      "final_format_valid": true
+    },
+    "rg_date": {
+      "score": 0.55,
+      "label": "suspicious",
+      "selected_source": null,
+      "agreement_families": [],
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "reason": "no_candidate_for_not_specified",
+      "candidates": [],
+      "final_value": "не указано",
+      "final_format_valid": true
+    },
+    "rg_pc": {
+      "score": 0.55,
+      "label": "suspicious",
+      "selected_source": null,
+      "agreement_families": [],
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "reason": "no_candidate_for_not_specified",
+      "candidates": [],
+      "final_value": "не указано",
+      "final_format_valid": true
+    },
+    "ca_date": {
+      "score": 0.9672,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "23.04.2024",
+          "score": 0.9672,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "23.04.2024",
+      "final_format_valid": true
+    },
+    "ca_fact": {
+      "score": 0.97,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "Y",
+          "score": 0.97,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "Y",
+      "final_format_valid": true
+    },
+    "ca_lad": {
+      "score": 1.0,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "2",
+          "score": 1.0,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "2",
+      "final_format_valid": true
+    },
+    "rca": {
+      "score": 1.0,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "0",
+          "score": 1.0,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "0",
+      "final_format_valid": true
+    },
+    "card_trop": {
+      "score": 0.93,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "положительный",
+          "score": 0.93,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "положительный",
+      "final_format_valid": true
+    },
+    "crea": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "84",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "84",
+      "final_format_valid": true
+    },
+    "glu": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "6.6",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "6.6",
+      "final_format_valid": true
+    },
+    "hb": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "138",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "138",
+      "final_format_valid": true
+    },
+    "ldl": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "2.5",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "2.5",
+      "final_format_valid": true
+    },
+    "leucocytes": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "6.6",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "6.6",
+      "final_format_valid": true
+    },
+    "thrombocytes": {
+      "score": 0.9984,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "175",
+          "score": 0.9984,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "175",
+      "final_format_valid": true
+    },
+    "tot_chol": {
+      "score": 0.55,
+      "label": "suspicious",
+      "selected_source": null,
+      "agreement_families": [],
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "reason": "no_candidate_for_not_specified",
+      "candidates": [],
+      "final_value": "не указано",
+      "final_format_valid": true
+    },
+    "2_aag": {
+      "score": 0.97,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "Клопидогрел 75 мг 1 раз в день",
+          "score": 0.97,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "Клопидогрел 75 мг 1 раз в день",
+      "final_format_valid": true
+    },
+    "ace_ing_sartan": {
+      "score": 0.97,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "Лозартан 50 мг утром",
+          "score": 0.97,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "Лозартан 50 мг утром",
+      "final_format_valid": true
+    },
+    "anticoagulant": {
+      "score": 0.55,
+      "label": "suspicious",
+      "selected_source": null,
+      "agreement_families": [],
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "reason": "no_candidate_for_not_specified",
+      "candidates": [],
+      "final_value": "не указано",
+      "final_format_valid": true
+    },
+    "aspirin": {
+      "score": 0.97,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "Ацетилсалициловая кислота 100 мг утром",
+          "score": 0.97,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "Ацетилсалициловая кислота 100 мг утром",
+      "final_format_valid": true
+    },
+    "bb": {
+      "score": 0.97,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "Метопролол 50 мг 2 раза в день",
+          "score": 0.97,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "Метопролол 50 мг 2 раза в день",
+      "final_format_valid": true
+    },
+    "statin": {
+      "score": 0.97,
+      "label": "good",
+      "selected_source": "regex",
+      "agreement_families": [
+        "rules"
+      ],
+      "agreement_count": 1,
+      "conflict": false,
+      "format_valid": true,
+      "evidence_valid": true,
+      "candidates": [
+        {
+          "source": "regex",
+          "source_family": "rules",
+          "value": "Аторвастатин 80 мг вечером",
+          "score": 0.97,
+          "format_valid": true,
+          "evidence_valid": true,
+          "absence_rule": false,
+          "peer_support": 0.0,
+          "peer_bonus": 0.0,
+          "adaptive_llm_bonus": 0.0
+        }
+      ],
+      "final_value": "Аторвастатин 80 мг вечером",
+      "final_format_valid": true
+    }
+  },
+  "cross_field_issues": [],
+  "typo_corrections": [],
+  "source_errors": [],
+  "routing": {
+    "strategy": "probe_compare",
+    "local_fields": [],
+    "api_fields": [],
+    "disagreement_fields": [],
+    "comparison_events": {},
+    "local_provider_used": false,
+    "api_provider_used": false,
+    "adaptive_cluster": null,
+    "adaptive_policy_ready": false,
+    "adaptive_reasons": {},
+    "llm_field_bonus": {}
+  },
+  "timing_ms": {
+    "regex_ms": 14.66,
+    "total_ms": 21.95
+  },
+  "batch_similarity": {
+    "adjustment": 0.0,
+    "available": false,
+    "cluster": -1,
+    "cluster_probability": 0.0,
+    "cluster_peer_count": 0,
+    "clinical_peer_count": 1,
+    "cluster_presence_consistency": null,
+    "clinical_presence_consistency": null
+  }
+}

@@ -1,0 +1,64 @@
+[models]
+# Runtime local LLM. model_alias resolves through config/local_models.json.
+local_enabled = true
+local_backend = "transformers"  # transformers | openai_compatible | disabled
+model_alias = "qwen_1_5b"
+local_model_path = ""           # optional: fine-tuned adapter/model path; empty => preset model_id
+local_base_url = "http://127.0.0.1:8000/v1"
+local_api_key = "EMPTY"
+local_device = "auto"
+local_dtype = "auto"
+local_max_new_tokens = 1100
+local_temperature = 0.0
+local_grouped_prompts = true
+local_max_input_chars = 14000
+
+[api]
+enabled = true
+# Generic OpenAI-compatible chat-completions endpoint. Keep credentials in environment variables.
+# Example base_url is provider-specific; set it together with model and the key environment variable.
+protocol = "openai_compatible"
+base_url = ""
+model = ""
+api_key = ""
+api_key_env = "PROVIDER_3_API_KEY"
+timeout_seconds = 90
+max_retries = 2
+temperature = 0.0
+max_tokens = 1200
+# API is primarily an adjudicator: only unresolved/low-confidence fields are sent by default.
+mode = "uncertain"  # uncertain | all | disabled
+uncertain_score_below = 0.88
+max_input_chars = 14000
+
+[runtime]
+threads = 4
+folder_workers = 4
+batch_size = 8
+torch_num_threads = 4
+torch_num_interop_threads = 1
+hf_tokenizers_parallelism = false
+# With transformers backend a single loaded model is shared and generation is locked.
+# For multiple UI workers prefer openai_compatible local model server.
+
+[pipeline]
+use_regex = true
+use_typo_layer = true
+use_local = true
+use_api = true
+local_mode = "uncertain"        # all | uncertain | disabled
+regex_skip_local_score = 0.94
+min_candidate_score = 0.25
+write_context = true
+write_score = true
+# If true, an LLM candidate without an exact quote in the original text cannot win arbitration.
+require_exact_llm_evidence = true
+
+[clustering]
+n_clusters = 5
+max_features = 12000
+ngram_min = 1
+ngram_max = 2
+min_df = 2
+max_df = 0.96
+random_state = 42

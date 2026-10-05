@@ -1,0 +1,162 @@
+[models]
+# Runtime local LLM. model_alias resolves through config/local_models.json.
+local_enabled = true
+local_backend = "transformers"  # transformers | openai_compatible | disabled
+model_alias = "qwen_1_5b"
+local_model_path = ""           # optional: fine-tuned adapter/model path; empty => preset model_id
+local_base_url = "http://127.0.0.1:8000/v1"
+local_api_key = "EMPTY"
+local_device = "auto"
+local_dtype = "auto"
+local_max_new_tokens = 1100
+local_max_retries = 1
+local_temperature = 0.0
+local_grouped_prompts = true
+local_max_input_chars = 14000
+
+[api]
+enabled = false
+# Generic OpenAI-compatible chat-completions endpoint. Keep credentials in environment variables.
+# Shared system prompt is editable in config/api_system_prompt.txt.
+# Example base_url is provider-specific; set it together with model and the key environment variable.
+protocol = "openai_compatible"
+base_url = ""
+model = ""
+api_key = ""
+# Optional deployment override. Config key remains the primary requested path.
+api_key_env = "LLM_API_KEY"
+timeout_seconds = 90
+max_retries = 2
+temperature = 0.0
+max_tokens = 1200
+# API is primarily an adjudicator: only unresolved/low-confidence fields are sent by default.
+mode = "uncertain"  # uncertain | all | disabled
+uncertain_score_below = 0.88
+max_input_chars = 14000
+
+[runtime]
+threads = 4
+folder_workers = 4
+batch_size = 8
+torch_num_threads = 4
+torch_num_interop_threads = 1
+hf_tokenizers_parallelism = false
+# With transformers backend a single loaded model is shared and generation is locked.
+# For multiple UI workers prefer openai_compatible local model server.
+
+[pipeline]
+use_regex = true
+use_typo_layer = true
+use_local = true
+use_api = false
+local_mode = "uncertain"              # all | uncertain | disabled
+regex_skip_local_score = 0.94
+min_candidate_score = 0.25
+write_context = true
+write_score = true
+# If true, an LLM candidate without an exact quote in the original text cannot win arbitration.
+require_exact_llm_evidence = true
+# Do not call an LLM just because a whole source section is absent.
+route_missing_only_if_source_section_present = true
+
+
+[orchestration]
+# The whole batch is analyzed first. A small representative/diverse subset is
+# then processed as calibration probes before the remaining files.
+enabled = true
+probe_files = 5
+# Legacy alias retained for backwards compatibility with older scripts.
+warmup_files = 5
+
+# Probe files: rules and API see the same fields. Local LLM is used only when
+# they disagree, including one-sided coverage gaps (regex missing, API evidenced).
+probe_api_mode = "all"
+probe_local_on_disagreement = true
+fallback_local_if_api_unavailable = true
+
+# Normal routing remains cheap unless calibration expands selected fields.
+normal_local_mode = "uncertain"
+normal_api_mode = "uncertain"
+
+# Representative + diversity sampling over the whole batch.
+sampling_semantic_weight = 0.65
+sampling_extraction_mask_weight = 0.35
+sampling_include_template_shift = true
+sampling_noise_template_penalty = 0.75
+sampling_noise_diversity_penalty = 0.90
+
+# Compare batch-wide deterministic field presence with the open train-100
+# baseline. A material drop can pre-emptively expand API routing for that field.
+train_regex_baseline_file = "config/train_regex_baseline.json"
+use_batch_shift_for_routing = true
+batch_shift_min_documents = 5
+batch_shift_min_train_presence = 0.25
+batch_shift_presence_drop = 0.20
+
+# Adaptive policy learned from probe comparison.
+adaptive_min_probe_observations_global = 3
+adaptive_min_probe_observations_cluster = 1
+adaptive_regex_gap_rate = 0.30
+adaptive_cluster_regex_gap_rate = 0.50
+adaptive_semantic_conflict_rate = 0.20
+adaptive_cluster_semantic_conflict_rate = 0.50
+
+# Conservative optional arbitration boost for evidenced LLM candidates only.
+# Routing expansion is the primary adaptation; this bonus is deliberately small.
+adaptive_llm_bonus_enabled = true
+adaptive_llm_bonus_api_always = 0.015
+adaptive_llm_bonus_both_always = 0.025
+
+
+# ============================================================
+# OPTIONAL BATCH SIMILARITY / PEER SIGNAL
+# ============================================================
+
+[batch_similarity]
+enabled = true
+min_batch_documents = 5
+# HDBSCAN determines the number of clusters itself and can leave outliers as -1.
+method = "hdbscan"
+stopwords_file = "config/cluster_stopwords.txt"
+auto_stopword_docfreq = 0.95
+frequency_top_terms = 80
+max_features = 10000
+ngram_min = 1
+ngram_max = 2
+min_df = 2
+max_df = 0.90
+svd_components = 30
+min_cluster_size = 5
+min_samples = 2
+cluster_selection_method = "eom"
+allow_single_cluster = false
+random_state = 42
+cluster_top_terms = 20
+
+# Only high-confidence deterministic previews contribute peer priors.
+peer_min_preview_score = 0.90
+clinical_similarity_threshold = 0.72
+clinical_min_shared_weight = 3.0
+clinical_max_neighbors = 12
+peer_cluster_prior_weight = 0.55
+peer_clinical_prior_weight = 0.45
+
+# Peer values are a weak tie-breaker between candidates already supported by
+# the current document. They can never create/fill a value.
+use_peer_value_tiebreak = true
+peer_value_tiebreak_weight = 0.035
+peer_tiebreak_margin = 0.08
+peer_value_fields = [
+  "art_hyper", "atr_fibril", "ckd", "copd", "diagnosis_icd", "dm", "hf",
+  "killip", "mi_localisation", "tlt", "type_acs", "ecg_avb", "ecg_elevation",
+  "ecg_rythm", "ca_fact", "ca_lad", "rca"
+]
+
+# File-level score adjustment. Total cohort influence is bounded to +/- 0.05.
+score_cluster_presence_weight = 0.025
+score_clinical_presence_weight = 0.025
+score_consistency_reference = 0.85
+score_max_negative_adjustment = 0.05
+# Cohort similarity is used as an anomaly penalty by default, not as a confidence booster.
+score_max_positive_adjustment = 0.0
+
